@@ -16,6 +16,9 @@ public class SubcolumnValue {
     private int color = ChartUtils.DEFAULT_COLOR;
     private int darkenColor = ChartUtils.DEFAULT_DARKEN_COLOR;
     private char[] label;
+    public boolean hasVisit;
+    public int dotColor;
+    public int dotSize;
 
     public SubcolumnValue() {
         setValue(0);
@@ -30,6 +33,15 @@ public class SubcolumnValue {
         // point and targetPoint have to be different objects
         setValue(value);
         setColor(color);
+    }
+
+    public SubcolumnValue(float value, int color, boolean hasVisit, int dotColor, int dotSize) {
+        // point and targetPoint have to be different objects
+        setValue(value);
+        setColor(color);
+        this.hasVisit = hasVisit;
+        this.dotColor = dotColor;
+        this.dotSize = dotSize;
     }
 
     public SubcolumnValue(SubcolumnValue columnValue) {

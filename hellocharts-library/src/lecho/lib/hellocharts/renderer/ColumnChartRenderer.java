@@ -366,7 +366,8 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
         }
     }
 
-    private void drawLabel(Canvas canvas, Column column, SubcolumnValue columnValue, boolean isStacked, float offset) {
+    private void drawLabel(Canvas canvas, Column column, SubcolumnValue columnValue,
+                           boolean isStacked, float offset) {
         final int numChars = column.getFormatter().formatChartValue(labelBuffer, columnValue);
 
         if (numChars == 0) {
@@ -412,10 +413,10 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
             // Draw nothing.
             return;
         }
-
         labelBackgroundRect.set(left, top, right, bottom);
-        drawLabelTextAndBackground(canvas, labelBuffer, labelBuffer.length - numChars, numChars,
-                columnValue.getDarkenColor());
+        drawLabelTextAndBackground(canvas, labelBuffer,
+                                   labelBuffer.length - numChars, numChars,
+                                   columnValue.getDarkenColor());
 
     }
 

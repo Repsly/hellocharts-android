@@ -82,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
             adapter = new ChartSamplesAdapter(getActivity(), 0, generateSamplesDescriptions());
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(this);
+            listView.performItemClick(listView, 1, listView.getItemIdAtPosition(1));
             return rootView;
         }
 

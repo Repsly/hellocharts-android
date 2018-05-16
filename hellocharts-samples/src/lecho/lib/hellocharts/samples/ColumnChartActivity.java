@@ -1,5 +1,6 @@
 package lecho.lib.hellocharts.samples;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -166,12 +167,17 @@ public class ColumnChartActivity extends ActionBarActivity {
             List<Column> columns = new ArrayList<Column>();
             List<SubcolumnValue> values;
             for (int i = 0; i < numColumns; ++i) {
-
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+                    boolean hasVisit = false;
+                    if (i % 2 == 0) {
+                        hasVisit = true;
+                    }
+                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5,
+                                                  ChartUtils.pickColor(), hasVisit, Color
+                                                          .parseColor("#FFBB33"), 5));
+                    //values.add(new SubcolumnValue(50));
                 }
-
                 Column column = new Column(values);
                 column.setHasLabels(hasLabels);
                 column.setHasLabelsOnlyForSelected(hasLabelForSelected);
@@ -193,7 +199,7 @@ public class ColumnChartActivity extends ActionBarActivity {
                 data.setAxisXBottom(null);
                 data.setAxisYLeft(null);
             }
-
+            chart.setZoomEnabled(false);
             chart.setColumnChartData(data);
 
         }

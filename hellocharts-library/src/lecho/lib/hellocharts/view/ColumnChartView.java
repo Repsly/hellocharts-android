@@ -20,7 +20,7 @@ import lecho.lib.hellocharts.renderer.ColumnChartRenderer;
  */
 public class ColumnChartView extends AbstractChartView implements ColumnChartDataProvider {
     private static final String TAG = "ColumnChartView";
-    private ColumnChartData data;
+    public ColumnChartData data;
     private ColumnChartOnValueSelectListener onValueTouchListener = new DummyColumnChartOnValueSelectListener();
 
     public ColumnChartView(Context context) {
@@ -84,5 +84,9 @@ public class ColumnChartView extends AbstractChartView implements ColumnChartDat
         if (null != touchListener) {
             this.onValueTouchListener = touchListener;
         }
+    }
+
+    public ColumnChartData getData() {
+        return data;
     }
 }

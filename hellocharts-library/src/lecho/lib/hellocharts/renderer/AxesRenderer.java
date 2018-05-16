@@ -8,10 +8,18 @@ import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lecho.lib.hellocharts.computator.ChartComputator;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.ChartData;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.AxisAutoValues;
 import lecho.lib.hellocharts.util.ChartUtils;
@@ -374,23 +382,28 @@ public class AxesRenderer {
      */
     public void drawInForeground(Canvas canvas) {
         Axis axis = chart.getChartData().getAxisYLeft();
+        List<Column> list = new ArrayList<>();
+        if (chart.getChartData() instanceof ColumnChartData) {
+            ColumnChartData d = (ColumnChartData) chart.getChartData();
+            list = d.getColumns();
+        }
         if (null != axis) {
-            drawAxisLabelsAndName(canvas, axis, LEFT);
+            drawAxisLabelsAndName(canvas, axis, LEFT, list);
         }
 
         axis = chart.getChartData().getAxisYRight();
         if (null != axis) {
-            drawAxisLabelsAndName(canvas, axis, RIGHT);
+            drawAxisLabelsAndName(canvas, axis, RIGHT, list);
         }
 
         axis = chart.getChartData().getAxisXBottom();
         if (null != axis) {
-            drawAxisLabelsAndName(canvas, axis, BOTTOM);
+            drawAxisLabelsAndName(canvas, axis, BOTTOM, list);
         }
 
         axis = chart.getChartData().getAxisXTop();
         if (null != axis) {
-            drawAxisLabelsAndName(canvas, axis, TOP);
+            drawAxisLabelsAndName(canvas, axis, TOP, list);
         }
     }
 
@@ -570,7 +583,7 @@ public class AxesRenderer {
         }
     }
 
-    private void drawAxisLabelsAndName(Canvas canvas, Axis axis, int position) {
+    private void drawAxisLabelsAndName(Canvas canvas, Axis axis, int position, List<Column> list) {
         float labelX, labelY;
         labelX = labelY = 0;
         boolean isAxisVertical = isAxisVertical(position);
@@ -607,6 +620,17 @@ public class AxesRenderer {
             } else {
                 canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
                         labelPaintTab[position]);
+
+                Paint bubblePaint = new Paint();
+                bubblePaint.setAntiAlias(true);
+                bubblePaint.setStyle(Paint.Style.FILL);
+                if (TOP == position || BOTTOM == position && list != null && list.size() > 0) {
+                    if (list.get(valueToDrawIndex).getValues().get(0).hasVisit) {
+                        Paint p = new Paint();
+                        p.setColor(list.get(valueToDrawIndex).getValues().get(0).dotColor);
+                        canvas.drawCircle(labelX, labelY + ChartUtils.dp2px(density, 10), ChartUtils.dp2px(density, list.get(valueToDrawIndex).getValues().get(0).dotSize), p);
+                    }
+                }
             }
         }
 
