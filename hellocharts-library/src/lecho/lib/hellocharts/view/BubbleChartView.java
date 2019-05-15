@@ -1,7 +1,6 @@
 package lecho.lib.hellocharts.view;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -97,6 +96,6 @@ public class BubbleChartView extends AbstractChartView implements BubbleChartDat
      */
     public void removeMargins() {
         bubbleChartRenderer.removeMargins();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 }

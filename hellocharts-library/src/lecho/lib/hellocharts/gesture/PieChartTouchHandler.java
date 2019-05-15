@@ -2,10 +2,10 @@ package lecho.lib.hellocharts.gesture;
 
 import android.content.Context;
 import android.graphics.RectF;
-import android.support.v4.widget.ScrollerCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.widget.OverScroller;
 
 import lecho.lib.hellocharts.view.PieChartView;
 
@@ -22,7 +22,7 @@ public class PieChartTouchHandler extends ChartTouchHandler {
     /**
      * PieChartTouchHandler uses its own instance of Scroller.
      */
-    protected ScrollerCompat scroller;
+    protected OverScroller scroller;
     /**
      * Reference to PieChartView to use some methods specific for that kind of chart.
      */
@@ -33,7 +33,7 @@ public class PieChartTouchHandler extends ChartTouchHandler {
     public PieChartTouchHandler(Context context, PieChartView chart) {
         super(context, chart);
         pieChart = (PieChartView) chart;
-        scroller = ScrollerCompat.create(context);
+        scroller = new OverScroller(context);
         gestureDetector = new GestureDetector(context, new ChartGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(context, new ChartScaleGestureListener());
         isZoomEnabled = false;// Zoom is not supported by PieChart.

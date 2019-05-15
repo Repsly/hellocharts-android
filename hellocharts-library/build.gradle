@@ -8,17 +8,17 @@ apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn
 
 buildscript {
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
     }
 }
 
 dependencies {
-    //compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:support-v4:23.4.0'
+    implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 }
 
 
@@ -61,18 +61,6 @@ android {
         abortOnError false
     }
 
-}
-
-//Execute "gradle clean jarRelease" to cook jar.
-android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-    if (name.equals(com.android.builder.core.BuilderConstants.DEBUG)) {
-        return; // Skip debug builds.
-    }
-    def task = project.tasks.create "jar${name.capitalize()}", Jar
-    task.dependsOn variant.javaCompile
-    task.from variant.javaCompile.destinationDir
-    artifacts.add('archives', task);
 }
 
 // To publish to maven local execute "gradle clean build publishToMavenLocal"

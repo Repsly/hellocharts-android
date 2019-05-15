@@ -3,7 +3,7 @@ package lecho.lib.hellocharts.gesture;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.v4.widget.ScrollerCompat;
+import android.widget.OverScroller;
 
 import lecho.lib.hellocharts.computator.ChartComputator;
 import lecho.lib.hellocharts.model.Viewport;
@@ -15,10 +15,10 @@ public class ChartScroller {
 
     private Viewport scrollerStartViewport = new Viewport(); // Used only for zooms and flings
     private Point surfaceSizeBuffer = new Point();// Used for scroll and flings
-    private ScrollerCompat scroller;
+    private OverScroller scroller;
 
     public ChartScroller(Context context) {
-        scroller = ScrollerCompat.create(context);
+        scroller = new OverScroller(context);
     }
 
     public boolean startScroll(ChartComputator computator) {

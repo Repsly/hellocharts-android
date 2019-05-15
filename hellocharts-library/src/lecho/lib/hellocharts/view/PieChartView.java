@@ -3,7 +3,6 @@ package lecho.lib.hellocharts.view;
 import android.content.Context;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -119,7 +118,7 @@ public class PieChartView extends AbstractChartView implements PieChartDataProvi
      */
     public void setCircleOval(RectF orginCircleOval) {
         pieChartRenderer.setCircleOval(orginCircleOval);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     /**
@@ -145,7 +144,7 @@ public class PieChartView extends AbstractChartView implements PieChartDataProvi
         } else {
             pieChartRenderer.setChartRotation(rotation);
         }
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     public boolean isChartRotationEnabled() {
@@ -187,6 +186,6 @@ public class PieChartView extends AbstractChartView implements PieChartDataProvi
      */
     public void setCircleFillRatio(float fillRatio) {
         pieChartRenderer.setCircleFillRatio(fillRatio);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 }

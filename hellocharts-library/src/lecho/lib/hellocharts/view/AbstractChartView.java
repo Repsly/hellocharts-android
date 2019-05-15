@@ -3,7 +3,6 @@ package lecho.lib.hellocharts.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +31,7 @@ import lecho.lib.hellocharts.util.ChartUtils;
  * @author Leszek Wach
  */
 public abstract class AbstractChartView extends View implements Chart {
+
     protected ChartComputator chartComputator;
     protected AxesRenderer axesRenderer;
     protected ChartTouchHandler touchHandler;
@@ -74,7 +74,7 @@ public abstract class AbstractChartView extends View implements Chart {
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
         chartComputator.setContentRect(getWidth(), getHeight(), getPaddingLeft(), getPaddingTop(), getPaddingRight(),
-                getPaddingBottom());
+                                       getPaddingBottom());
         chartRenderer.onChartSizeChanged();
         axesRenderer.onChartSizeChanged();
     }
@@ -111,7 +111,7 @@ public abstract class AbstractChartView extends View implements Chart {
             }
 
             if (needInvalidate) {
-                ViewCompat.postInvalidateOnAnimation(this);
+                postInvalidateOnAnimation();
             }
 
             return true;
@@ -126,7 +126,7 @@ public abstract class AbstractChartView extends View implements Chart {
         super.computeScroll();
         if (isInteractive) {
             if (touchHandler.computeScroll()) {
-                ViewCompat.postInvalidateOnAnimation(this);
+                postInvalidateOnAnimation();
             }
         }
     }
@@ -150,14 +150,14 @@ public abstract class AbstractChartView extends View implements Chart {
     public void animationDataUpdate(float scale) {
         getChartData().update(scale);
         chartRenderer.onChartViewportChanged();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
     public void animationDataFinished() {
         getChartData().finish();
         chartRenderer.onChartViewportChanged();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -184,7 +184,7 @@ public abstract class AbstractChartView extends View implements Chart {
     public void setChartRenderer(ChartRenderer renderer) {
         chartRenderer = renderer;
         resetRendererAndTouchHandler();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -297,7 +297,7 @@ public abstract class AbstractChartView extends View implements Chart {
     @Override
     public void setMaxZoom(float maxZoom) {
         chartComputator.setMaxZoom(maxZoom);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -383,7 +383,7 @@ public abstract class AbstractChartView extends View implements Chart {
     @Override
     public void setMaximumViewport(Viewport maxViewport) {
         chartRenderer.setMaximumViewport(maxViewport);
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -392,7 +392,7 @@ public abstract class AbstractChartView extends View implements Chart {
             viewportAnimator.cancelAnimation();
             viewportAnimator.startAnimation(getCurrentViewport(), targetViewport);
         }
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -401,7 +401,7 @@ public abstract class AbstractChartView extends View implements Chart {
             viewportAnimator.cancelAnimation();
             viewportAnimator.startAnimation(getCurrentViewport(), targetViewport, duration);
         }
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -414,7 +414,7 @@ public abstract class AbstractChartView extends View implements Chart {
         if (null != targetViewport) {
             chartRenderer.setCurrentViewport(targetViewport);
         }
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -447,7 +447,7 @@ public abstract class AbstractChartView extends View implements Chart {
     public void selectValue(SelectedValue selectedValue) {
         chartRenderer.selectValue(selectedValue);
         callTouchListener();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     @Override
@@ -470,7 +470,7 @@ public abstract class AbstractChartView extends View implements Chart {
         chartComputator.resetContentRect();
         chartRenderer.onChartDataChanged();
         axesRenderer.onChartDataChanged();
-        ViewCompat.postInvalidateOnAnimation(this);
+        postInvalidateOnAnimation();
     }
 
     /**
